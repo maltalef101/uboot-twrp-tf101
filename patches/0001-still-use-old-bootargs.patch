@@ -1,0 +1,13 @@
+# Change bootargs for old arguments, as booting from eMMC still does not work.
+# With that, it can recognize internal eMMC partitions like old mnidza U-Boot did.
+--- a/include/configs/transformer-common.h      2022-01-16 23:40:41.353604063 +0000
++++ b/include/configs/transformer-common.h      2022-01-16 23:43:05.483738994 +0000
+@@ -109,7 +109,7 @@
+        "if load mmc ${bootdev}:1 ${kernel_addr_r} ${kernel_file};" \
+        "then echo Loading DTB;" \
+                "load mmc ${bootdev}:1 ${fdt_addr_r} ${fdtfile};" \
+-               "setenv bootargs console=ttyS0,115200n8 root=/dev/mmcblk${bootdev}p${rootpart} rw gpt;" \
++               "setenv bootargs console=ttyS0,115200n8 root=/dev/mmcblk${bootdev}p${rootpart} rw nvmem=128M@384M mem=1024M@0M vmalloc=128M gpt usbcore.oldscheme_first=1 lp0_vec=8192@0x1fbed000;" \
+                "echo Loading Initramfs;" \
+                "if load mmc ${bootdev}:1 ${ramdisk_addr_r} ${ramdisk_file};" \
+                "then echo Booting Kernel;" \
